@@ -37,5 +37,5 @@ Route::middleware('api')->group(function() {
     Route::get('/user/{user_id}/weekly_calories', 'MealController@weekly_calories');
     Route::get('/user/{user_id}/meals_calories', 'MealController@all_meals_calories');
     Route::get('/meal/{meal_id}/show', 'MealController@show');
-    Route::get('/user/{user_id}/meals/{day_id}', 'MealController@daily_meals');
+    Route::get('/user/{user_id}/day/{day_id}', 'MealController@daily_meals');
 });

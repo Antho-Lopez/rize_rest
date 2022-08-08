@@ -66,9 +66,9 @@ class MealController extends Controller
                 $kcal_per_ingredient = $ingredient->calories * $multiplicator;
 
                 if(array_key_exists($meal->name, $kcal_per_meal)){
-                    $kcal_per_meal[$meal->name] += $kcal_per_ingredient;
+                    $kcal_per_meal[$meal->name] += round($kcal_per_ingredient, 2);
                 } else {
-                    $kcal_per_meal[$meal->name] = $kcal_per_ingredient;
+                    $kcal_per_meal[$meal->name] = round($kcal_per_ingredient, 2);
                 }
             }
         }
@@ -91,7 +91,27 @@ class MealController extends Controller
 
     public function daily_meals($user_id, $day_id){
 
-        $user_meals = Meal::where('user_id', $user_id)->get();
+        $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->get();
+        $kcal_per_meal = [];
 
+        foreach($user_meals_and_ingredients as $meal){
+            foreach($meal->days as $day_meal){
+                if($day_meal->id == $day_id){
+                    foreach($meal->ingredients as $ingredient){
+
+                        $multiplicator = $ingredient->portion / 100;
+                        $kcal_per_ingredient = $ingredient->calories * $multiplicator;
+
+                        if(array_key_exists($meal->name, $kcal_per_meal)){
+                            $kcal_per_meal[$meal->name] += round($kcal_per_ingredient, 2);
+                        } else {
+                            $kcal_per_meal[$meal->name] = round($kcal_per_ingredient, 2);
+                        }
+                    }
+                }
+            }
+        }
+
+        return $kcal_per_meal;
     }
 }

@@ -25,4 +25,9 @@ class Meal extends Model
         return $this->hasMany(Ingredient::class);
     }
 
+    public function days()
+    {
+        return $this->belongsToMany(Day::class);
+    }
+
 }
