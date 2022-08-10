@@ -30,4 +30,10 @@ class Training extends Model
         return $this->hasMany(Muscle::class);
     }
 
+    public function days()
+    {
+        return $this->belongsToMany(Day::class);
+    }
+
+
 }

@@ -272,6 +272,7 @@ class MealController extends Controller
         //     'portion' => 'array',
         // ]);
 
+         // $new_ingredients_name = $request->input('new_ing_name');
         $new_ingredients_name = [1, 2];
         $new_ingredients = [];
 
