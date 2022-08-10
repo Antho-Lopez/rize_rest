@@ -22,19 +22,19 @@ class SleepController extends Controller
             array_push($get_days, $days->day_id);
         }
 
-        $data = $request->validate([
-            'day_id' => 'array',
-            'go_to_sleep' => 'array',
-            'waking_up' => 'array',
-        ]);
+        // $data = $request->validate([
+        //     'day_id' => 'array',
+        //     'go_to_sleep' => 'array',
+        //     'waking_up' => 'array',
+        // ]);
 
-        $days_id = $request->input('day_id');
-        // $days_id = [1, 4 , 6];
+        // $days_id = $request->input('day_id');
+        $days_id = [1, 4 , 6];
         $count = 0;
 
-        // $data['day_id'] = [1, 4, 6];
-        // $data['go_to_sleep'] = ['21:00:00', '22:00:00', '23:00:00'];
-        // $data['waking_up'] = ['11:00:00', '12:00:00', '13:00:00'];
+        $data['day_id'] = [1, 4, 6];
+        $data['go_to_sleep'] = ['21:00:00', '22:00:00', '23:00:00'];
+        $data['waking_up'] = ['11:00:00', '12:00:00', '13:00:00'];
 
         foreach($days_id as $day_id){
 
