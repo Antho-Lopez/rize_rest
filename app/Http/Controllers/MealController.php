@@ -201,6 +201,103 @@ class MealController extends Controller
 
     public function update_meal(Request $request, $user_id, $meal_id)
     {
+         // $data = $request->validate([
+        //     'name' => 'required',
+        // ]);
 
+        $data['name'] = 'test modification ouas';
+
+        $meal = Meal::where('id', $meal_id)->update([
+            'name' => $data['name'],
+        ]);
+
+        // $data2 = $request->validate([
+        //     'existing_ing_name' => 'array',
+        //     'id' => 'array',
+        //     'calories' => 'array',
+        //     'proteins' => 'array',
+        //     'glucides' => 'array',
+        //     'lipids' => 'array',
+        //     'portion' => 'array',
+        //     'deleted_at' => 'array',
+        // ]);
+
+        $data2['existing_ing_name'] = ['Poulet grillo', 'Pâtes grilla'];
+        $data2['id'] = [1, 2];
+        $data2['calories'] = [300, 300];
+        $data2['proteins'] = [20, 30];
+        $data2['glucides'] = [24, 34];
+        $data2['lipids'] = [2, 3];
+        $data2['portion'] = [220, 320];
+        $data2['deleted_at'] = [1, 2];
+
+        // $existing_ingredients_name = $request->input('existing_ing_name');
+        $existing_ingredients_name = [1, 2];
+
+        $ingredients = [];
+
+        if(!empty($data2)){
+            $count = 0;
+            foreach($existing_ingredients_name as $ingredient_name){
+                array_push($ingredients, Ingredient::where('id', $data2['id'][$count])->update([
+                    'name' => $data2['existing_ing_name'][$count],
+                    'meal_id' => $meal_id,
+                    'calories' => $data2['calories'][$count],
+                    'proteins' => $data2['proteins'][$count],
+                    'glucides' => $data2['glucides'][$count],
+                    'lipids' => $data2['lipids'][$count],
+                    'portion' => $data2['portion'][$count],
+                ]));
+                $count++;
+            }
+
+            // $deleted_at = $request->input('deleted_at');
+            $deleted_at = [1, 2];
+            $count_delete = 0;
+        }
+
+        if(!empty($data2['deleted_at'])){
+            foreach($deleted_at as $deleted){
+                Ingredient::where('id', $data2['deleted_at'][$count_delete])->delete();
+                $count_delete++;
+            }
+        }
+
+        // $data3 = $request->validate([
+        //     'new_ing_name' => 'array',
+        //     'calories' => 'array',
+        //     'proteins' => 'array',
+        //     'glucides' => 'array',
+        //     'lipids' => 'array',
+        //     'portion' => 'array',
+        // ]);
+
+        $new_ingredients_name = [1, 2];
+        $new_ingredients = [];
+
+        $data3['new_ing_name'] = ['POTATOZ', 'CREMEEEE'];
+        $data3['calories'] = [100, 400];
+        $data3['proteins'] = [10, 40];
+        $data3['glucides'] = [14, 44];
+        $data3['lipids'] = [1, 4];
+        $data3['portion'] = [120, 420];
+
+        if(!empty($data3)){
+            $count_new = 0;
+            foreach($new_ingredients_name as $ingredient_name){
+                array_push($ingredients, Ingredient::create([
+                    'name' => $data3['new_ing_name'][$count_new],
+                    'meal_id' => $meal_id,
+                    'calories' => $data3['calories'][$count_new],
+                    'proteins' => $data3['proteins'][$count_new],
+                    'glucides' => $data3['glucides'][$count_new],
+                    'lipids' => $data3['lipids'][$count_new],
+                    'portion' => $data3['portion'][$count_new],
+                ]));
+                $count_new++;
+            }
+        }
+
+        return [$meal, $ingredients, $new_ingredients];
     }
 }
