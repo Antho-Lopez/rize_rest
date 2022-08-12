@@ -41,7 +41,9 @@ Route::middleware('api')->group(function() {
     Route::post('/user/{user_id}/meal/create', 'MealController@create');
     Route::post('/user/{user_id}/meal/{meal_id}/update_meal', 'MealController@update_meal');
 
-     // TRAININGS
-     Route::get('/user/{user_id}/trainings', 'TrainingController@index');
-     Route::get('/training/{training_id}/show', 'TrainingController@show');
+    // TRAININGS
+    Route::get('/user/{user_id}/trainings', 'TrainingController@index');
+    Route::get('/training/{training_id}/show', 'TrainingController@show');
+    Route::get('/training/{training_id}/sessions', 'SessionController@index');
+    Route::get('/session/{session_id}/show', 'SessionController@show');
 });
