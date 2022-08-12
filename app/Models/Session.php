@@ -19,4 +19,8 @@ class Session extends Model
     {
         return $this->belongsTo(Training::class);
     }
+    public function repetitions()
+    {
+        return $this->hasMany(Repetition::class);
+    }
 }

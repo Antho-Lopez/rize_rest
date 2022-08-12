@@ -25,6 +25,11 @@ class Training extends Model
         return $this->hasMany(Session::class);
     }
 
+    public function four_last_sessions()
+    {
+        return $this->hasMany(Session::class)->orderBy('session_day', 'DESC')->take(4);
+    }
+
     public function muscles()
     {
         return $this->hasMany(Muscle::class);

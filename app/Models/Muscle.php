@@ -19,4 +19,9 @@ class Muscle extends Model
     {
         return $this->belongsTo(Training::class);
     }
+
+    public function exercices()
+    {
+        return $this->hasMany(Exercice::class);
+    }
 }

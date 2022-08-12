@@ -43,4 +43,5 @@ Route::middleware('api')->group(function() {
 
      // TRAININGS
      Route::get('/user/{user_id}/trainings', 'TrainingController@index');
+     Route::get('/training/{training_id}/show', 'TrainingController@show');
 });
