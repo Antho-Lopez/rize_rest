@@ -44,8 +44,8 @@ class TrainingController extends Controller
             $progression = 0;
             if(getPrevValue($count_key, $kilos_lifted) != false){
 
-                $tamere = getPrevValue($count_key, $kilos_lifted);
-                $prev = array_shift($tamere);
+                $for_calcul = getPrevValue($count_key, $kilos_lifted);
+                $prev = array_shift($for_calcul);
                 $progression = $prev - $kilos_lifted[$count_key][0];
             }
 
@@ -56,7 +56,6 @@ class TrainingController extends Controller
             $count_key++;
 
         }
-
         return [$training, $kilos_lifted];
     }
 

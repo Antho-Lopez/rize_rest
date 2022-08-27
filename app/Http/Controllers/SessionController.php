@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Muscle;
 use App\Models\Session;
 use Illuminate\Http\Request;
 
@@ -30,9 +31,12 @@ class SessionController extends Controller
         return $kilos_lifted;
     }
 
-    public function show($training_id)
+    public function show($training_id, $session_id)
     {
+        $one_session = Session::with('repetitions.exercice.muscle')->find($session_id);
+        $muscles_training = Muscle::where('training_id', $training_id)->with('exercices.repetitions.session')->get();
 
+        return $muscles_training;
     }
 
 }
