@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\OldWeight;
 use App\Models\User;
 use App\Models\Sleep;
+use App\Models\Training;
+use App\Models\DayTraining;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -106,9 +108,14 @@ class UserController extends Controller
         $user = User::find($id);
         $last_measured_weight = OldWeight::where('user_id', $id)->orderBy('created_at', 'desc')->first();
         $today_sleep = Sleep::where('user_id', $id)->where('day_id', $today)->first();
-        // dd($today_sleep);
+        $training = Training::where('user_id', $id)->whereRelation('days', 'id', '=', 7)->first();
 
-        return [$user, $last_measured_weight, $today_sleep];
+        // $today_user_meals_and_ingredients = Meal::where('user_id', $id)->with('ingredients')->get();
+        // $kcal_per_meal = [];
+        // $kcal_per_day = [];
+
+
+        return [$user, $last_measured_weight, $today_sleep, $training];
     }
 
     public function update_weight(Request $request, $id)
