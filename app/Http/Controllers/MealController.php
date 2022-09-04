@@ -142,6 +142,8 @@ class MealController extends Controller
                 }
             }
         }
+        $test = array_sum($kcal_per_meal);
+        
         return $kcal_per_meal;
     }
 
