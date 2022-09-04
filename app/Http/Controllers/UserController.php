@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OldWeight;
 use App\Models\User;
+use App\Models\Sleep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -70,9 +71,44 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::with(['meals', 'trainings', 'sleeps'])->find($id);
-        $last_measured_weight = OldWeight::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+        return $user;
+    }
 
-        return [$user, $last_measured_weight];
+    public function home($id)
+    {
+        $today;
+        $today_day = Date('l');
+
+        switch ($today_day) {
+            case 'Monday':
+                $today = 1;
+                break;
+            case 'Tuesday':
+                $today = 2;
+                break;
+            case 'Wednesday':
+                $today = 3;
+                break;
+            case 'Thursday':
+                $today = 4;
+                break;
+            case 'Friday':
+                $today = 5;
+                break;
+            case 'Saturday':
+                $today = 6;
+                break;
+            case 'Sunday':
+                $today = 7;
+                break;
+        };
+
+        $user = User::find($id);
+        $last_measured_weight = OldWeight::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+        $today_sleep = Sleep::where('user_id', $id)->where('day_id', $today)->get();
+        // dd($today_sleep);
+
+        return [$user, $last_measured_weight, $today_sleep];
     }
 
     public function update_weight(Request $request, $id)

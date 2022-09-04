@@ -25,6 +25,7 @@ Route::middleware('api')->group(function() {
     Route::post('/login', 'UserController@login');
     Route::post('/me', 'UserController@me')->middleware('auth:sanctum');
     Route::get('/user/{id}/show', 'UserController@show');
+    Route::get('/user/{id}/home', 'UserController@home');
     Route::get('/user/{id}/weight', 'OldWeightController@show');
     Route::post('/user/{id}/update_weight', 'UserController@update_weight');
 
