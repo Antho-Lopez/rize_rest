@@ -108,7 +108,7 @@ class UserController extends Controller
         $user = User::find($id);
         $last_measured_weight = OldWeight::where('user_id', $id)->orderBy('created_at', 'desc')->first();
         $today_sleep = Sleep::where('user_id', $id)->where('day_id', $today)->first();
-        $training = Training::where('user_id', $id)->whereRelation('days', 'id', '=', 7)->first();
+        $training = Training::where('user_id', $id)->whereRelation('days', 'id', '=', 1)->first();
 
         // $today_user_meals_and_ingredients = Meal::where('user_id', $id)->with('ingredients')->get();
         // $kcal_per_meal = [];
