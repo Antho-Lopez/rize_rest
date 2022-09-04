@@ -69,7 +69,10 @@ class UserController extends Controller
 
     public function show($id)
     {
-        return User::with(['meals', 'trainings', 'sleeps'])->find($id);
+        $user = User::with(['meals', 'trainings', 'sleeps'])->find($id);
+        $last_measured_weight = OldWeight::where('user_id', $id)->orderBy('created_at', 'desc')->first();
+
+        return [$user, $last_measured_weight];
     }
 
     public function update_weight(Request $request, $id)
