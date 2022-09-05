@@ -79,7 +79,7 @@ class UserController extends Controller
 
     public function home($id)
     {
-        $today;
+        $today = 1;
         $today_day = Date('l');
 
         switch ($today_day) {
@@ -131,8 +131,7 @@ class UserController extends Controller
             }
         }
 
-        $today_calories = array_sum($kcal_per_meal);
-
+        $today_calories = array_sum($kcal_per_meal);    
         return [$user, $last_measured_weight, $today_sleep, $training, $today_calories];
     }
 
