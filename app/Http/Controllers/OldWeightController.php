@@ -11,7 +11,7 @@ class OldWeightController extends Controller
     public function show($user_id)
     {
         $user = User::find($user_id);
-        $user_weights = OldWeight::where('user_id', $user_id)->get();
+        $user_weights = OldWeight::where('user_id', $user_id)->orderBy('created_at', 'DESC')->get();
 
         return [$user, $user_weights];
     }
