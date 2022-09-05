@@ -18,6 +18,23 @@ class MealController extends Controller
     public function weekly_calories($user_id)
     {
         $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->get();
+
+        $user = User::with('activity')->find($id);
+
+        if($user->sex = 1){
+            $metabolism = (10 * $user->current_weight) + (6.25 * $user->height) - (5 * $user->age) - 10;
+        } else {
+            $metabolism = (10 * $user->current_weight) + (6.25 * $user->height) - (5 * $user->age) + 5;
+        }
+
+        $maintenance = $user->activity->multiplicator * $metabolism;
+
+        if($user->goal_weight >= $user->current_weight){
+            $goal_kcal = $maintenance * 1.20;
+        } else {
+            $goal_kcal = $maintenance * 0.85;
+        }
+
         $kcal_per_meal = [];
         $kcal_per_day = [];
 
@@ -50,10 +67,8 @@ class MealController extends Controller
                 }
             }
         }
-        // dump($group_meals_per_day);
-        // dump($kcal_per_meal);
-        // dump($kcal_per_day);
-        return $kcal_per_day;
+
+        return [$kcal_per_day, $goal_kcal];
         // RESULT
         // {
         //     "1": 2200.58,
@@ -143,7 +158,7 @@ class MealController extends Controller
             }
         }
         $test = array_sum($kcal_per_meal);
-        
+
         return $kcal_per_meal;
     }
 

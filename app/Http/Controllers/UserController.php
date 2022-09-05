@@ -22,7 +22,7 @@ class UserController extends Controller
             'activity_id' => '',
             'email' => 'required|string|email|max:255|unique:users',
             'sex' => '',
-            'birth_date' => '',
+            'age' => '',
             'height' => '',
             'current_weight' => '',
             'goal_weight' => '',
@@ -34,7 +34,7 @@ class UserController extends Controller
             'activity_id' => $validatedData['activity_id'],
             'email' => $validatedData['email'],
             'sex' => $validatedData['sex'],
-            'birth_date' => $validatedData['birth_date'],
+            'age' => $validatedData['age'],
             'height' => $validatedData['height'],
             'current_weight' => $validatedData['current_weight'],
             'goal_weight' => $validatedData['goal_weight'],
@@ -131,7 +131,7 @@ class UserController extends Controller
             }
         }
 
-        $today_calories = array_sum($kcal_per_meal);    
+        $today_calories = array_sum($kcal_per_meal);
         return [$user, $last_measured_weight, $today_sleep, $training, $today_calories];
     }
 
