@@ -40,7 +40,7 @@ class TrainingController extends Controller
                     $kilos_lifted[$count_key][0] = round($repetition->nb_repetitions * $repetition->kilos, 2);
                 }
             }
-            $kilos_lifted[$count_key][1] = $one_session->session_day . 'T00:00:00.000Z';
+            $kilos_lifted[$count_key][1] = $one_session->session_day;
 
             $progression = 0;
             if(getPrevValue($count_key, $kilos_lifted) != false){
