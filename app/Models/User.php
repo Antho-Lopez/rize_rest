@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function activity()
     {
-        return $this->hasOne(Activity::class);
+        return $this->belongsTo(Activity::class);
     }
 
     public function meals()

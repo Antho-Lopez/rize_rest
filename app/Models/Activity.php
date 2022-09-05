@@ -15,4 +15,5 @@ class Activity extends Model
         'description',
         'multiplicator',
     ];
+
 }

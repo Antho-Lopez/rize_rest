@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DayMeal;
 use App\Models\Ingredient;
 use App\Models\Meal;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MealController extends Controller
@@ -19,7 +20,7 @@ class MealController extends Controller
     {
         $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->get();
 
-        $user = User::with('activity')->find($id);
+        $user = User::with('activity')->find($user_id);
 
         if($user->sex = 1){
             $metabolism = (10 * $user->current_weight) + (6.25 * $user->height) - (5 * $user->age) - 10;
@@ -35,6 +36,7 @@ class MealController extends Controller
             $goal_kcal = $maintenance * 0.85;
         }
 
+        $goal_kcal = round($goal_kcal, 2);
         $kcal_per_meal = [];
         $kcal_per_day = [];
 
