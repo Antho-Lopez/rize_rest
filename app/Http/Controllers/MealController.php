@@ -87,33 +87,38 @@ class MealController extends Controller
 
     public function all_meals_calories($user_id, $day_id = null){
         $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->get();
+        $user_meals = Meal::where('user_id', $user_id)->get();
         $kcal_per_meal = [];
-
+        $count = 0;
+       
         foreach($user_meals_and_ingredients as $meal){
+
             foreach($meal->ingredients as $ingredient){
 
                 $multiplicator = $ingredient->portion / 100;
                 $kcal_per_ingredient = $ingredient->calories * $multiplicator;
 
-                if(array_key_exists($meal->name, $kcal_per_meal)){
-                    $kcal_per_meal[$meal->name][0] += round($kcal_per_ingredient, 2);
+                if(array_key_exists($count, $kcal_per_meal)){
+                    $kcal_per_meal[$count] += round($kcal_per_ingredient, 2);
                 } else {
-                    $kcal_per_meal[$meal->name][0] = round($kcal_per_ingredient, 2);
+                    $kcal_per_meal[$count] = round($kcal_per_ingredient, 2);
                 }
 
-                if(isset($day_id)){
-                    foreach($meal->days as $day){
+                // if(isset($day_id)){
+                //     foreach($meal->days as $day){
 
-                        if($day->id == $day_id){
-                            $kcal_per_meal[$meal->name][1] = 1;
-                        } elseif($day->id != $day_id && !isset($kcal_per_meal[$meal->name][1])) {
-                            $kcal_per_meal[$meal->name][1] = 0;
-                        }
-                    }
-                }
+                //         if($day->id == $day_id){
+                //             $kcal_per_meal[$count] = 1;
+                //         } elseif($day->id != $day_id && !isset($kcal_per_meal[$meal->name][1])) {
+                //             $kcal_per_meal[$count] = 0;
+                //         }
+                //     }
+                // }
             }
+            $user_meals[$count]['kcal'] = $kcal_per_meal[$count];
+            $count++;
         }
-        return $kcal_per_meal;
+        return $user_meals;
 
         // RESULT
         // {
