@@ -86,14 +86,23 @@ class MealController extends Controller
     }
 
     public function all_meals_calories($user_id, $day_id = null){
-        $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->get();
-        $user_meals = Meal::where('user_id', $user_id)->get();
+
+        if($day_id){
+            $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->whereRelation('days', 'id', '=', $day_id)->get();
+            $user_meals = Meal::where('user_id', $user_id)->whereRelation('days', 'id', '=', $day_id)->get();
+        } else {
+            $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->get();
+            $user_meals = Meal::where('user_id', $user_id)->get();
+        }
+
         $kcal_per_meal = [];
         $count = 0;
+
 
         foreach($user_meals_and_ingredients as $meal){
 
             if(count($meal->ingredients) > 0){
+
                 foreach($meal->ingredients as $ingredient){
 
                     $multiplicator = $ingredient->portion / 100;
@@ -104,32 +113,20 @@ class MealController extends Controller
                     } else {
                         $kcal_per_meal[$count] = round($kcal_per_ingredient, 2);
                     }
-
-                    // if(isset($day_id)){
-                    //     foreach($meal->days as $day){
-
-                    //         if($day->id == $day_id){
-                    //             $kcal_per_meal[$count] = 1;
-                    //         } elseif($day->id != $day_id && !isset($kcal_per_meal[$meal->name][1])) {
-                    //             $kcal_per_meal[$count] = 0;
-                    //         }
-                    //     }
-                    // }
                 }
+
             } else {
+
                 $kcal_per_meal[$count] = 0;
+
             }
+
             $user_meals[$count]['kcal'] = $kcal_per_meal[$count];
             $count++;
-        }
-        return $user_meals;
 
-        // RESULT
-        // {
-        //     "Start week breakfast maxou": [480, 1],
-        //     "All week Lunch maxou": [1320.58, 1],
-        //     "Diner maxou": [400, 0]
-        // }
+        }
+
+        return $user_meals;
     }
 
     public function show($meal_id){
