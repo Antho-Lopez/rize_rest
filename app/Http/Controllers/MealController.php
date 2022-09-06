@@ -85,7 +85,7 @@ class MealController extends Controller
         // }
     }
 
-    public function all_meals_calories($user_id, $day_id){
+    public function all_meals_calories($user_id, $day_id = null){
         $user_meals_and_ingredients = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->get();
         $kcal_per_meal = [];
 
