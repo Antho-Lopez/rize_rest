@@ -37,6 +37,8 @@ class MealController extends Controller
         }
 
         $goal_kcal = round($goal_kcal, 2);
+        $proteins_per_day = $user->current_weight * 2;
+        $glucides_per_day = $user->current_weight * 4;
         $kcal_per_meal = [];
         $kcal_per_day = [];
 
@@ -70,7 +72,7 @@ class MealController extends Controller
             }
         }
 
-        return [$kcal_per_day, $goal_kcal];
+        return [$kcal_per_day, $goal_kcal, $proteins_per_day, $glucides_per_day, $user->current_weight];
         // RESULT
         // {
         //     "1": 2200.58,
