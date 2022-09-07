@@ -145,7 +145,7 @@ class UserController extends Controller
         $today = date('Y-m-d');
         $last_weight = date_format($get_last_weight->created_at,'Y-m-d');
 
-        $data = $request->validate([
+        $weightData = $request->validate([
             'current_weight' => "required",
         ]);
 
@@ -153,11 +153,11 @@ class UserController extends Controller
 
             return response()->json([
                 User::where('id', $id)->update([
-                    'current_weight' =>  $data['current_weight'],
+                    'current_weight' =>  $weightData['current_weight'],
                 ]),
 
                 OldWeight::where('id', $get_last_weight->id)->update([
-                    'weight' =>  $data['current_weight'],
+                    'weight' =>  $weightData['current_weight'],
                 ]),
             ]);
 
@@ -165,12 +165,12 @@ class UserController extends Controller
 
             return response()->json([
                 User::where('id', $id)->update([
-                    'current_weight' =>  $data['current_weight'],
+                    'current_weight' =>  $weightData['current_weight'],
                 ]),
 
                 OldWeight::where('user_id', $id)->create([
                     'user_id' => $id,
-                    'weight' => $data['current_weight'],
+                    'weight' => $weightData['current_weight'],
                     'created_at' => date('Y-m-d H:i:s'),
                 ]),
             ]);
