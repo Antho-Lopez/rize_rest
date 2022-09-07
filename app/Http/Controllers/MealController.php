@@ -202,7 +202,18 @@ class MealController extends Controller
             $count++;
         }
 
+        foreach($all_meals as $meal){
+            foreach($meals_already_in as $meal_already_in){
+
+                if($meal->id == $meal_already_in->id){
+                    $all_meals->forget($count2);
+                }
+            }
+            $count2++;
+        }
+
         foreach($meals_already_in as $meal_already_in){
+
             if(count($meal_already_in->ingredients) > 0){
                 foreach($meal_already_in->ingredients as $ingredient){
 
@@ -222,7 +233,7 @@ class MealController extends Controller
             $count_meal_already_in++;
         }
 
-        return [$meals_already_in, $all_meals];
+        return [$meals_already_in, $all_meals->values()];
     }
 
     public function create(Request $request, $user_id)
