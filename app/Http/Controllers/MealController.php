@@ -172,6 +172,69 @@ class MealController extends Controller
         return $kcal_per_meal;
     }
 
+    public function edit_day_meal($user_id, $day_id){
+
+        $meals_already_in = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->whereRelation('days', 'id', '=', $day_id)->get();
+        $all_meals = Meal::where('user_id', $user_id)->with('ingredients')->with('days')->get();
+        $count = 0;
+        $count_meal_already_in = 0;
+        $count2 = 0;
+        $kcal_per_meal = [];
+        $kcal_per_meal_already_in = [];
+
+        foreach($all_meals as $meal){
+            if(count($meal->ingredients) > 0){
+                foreach($meal->ingredients as $ingredient){
+
+                    $multiplicator = $ingredient->portion / 100;
+                    $kcal_per_ingredient = $ingredient->calories * $multiplicator;
+
+                    if(array_key_exists($count, $kcal_per_meal)){
+                        $kcal_per_meal[$count] += round($kcal_per_ingredient, 2);
+                    } else {
+                        $kcal_per_meal[$count] = round($kcal_per_ingredient, 2);
+                    }
+                }
+            } else {
+                $kcal_per_meal[$count] = 0;
+            }
+            $all_meals[$count]['kcal'] = $kcal_per_meal[$count];
+            $count++;
+        }
+
+        foreach($all_meals as $meal){
+            foreach($meals_already_in as $meal_already_in){
+
+                if($meal->id == $meal_already_in->id){
+                    unset($all_meals[$count2]);
+                }
+            }
+            $count2++;
+        }
+
+        foreach($meals_already_in as $meal_already_in){
+            if(count($meal_already_in->ingredients) > 0){
+                foreach($meal_already_in->ingredients as $ingredient){
+
+                    $multiplicator = $ingredient->portion / 100;
+                    $kcal_per_ingredient = $ingredient->calories * $multiplicator;
+
+                    if(array_key_exists($count_meal_already_in, $kcal_per_meal_already_in)){
+                        $kcal_per_meal_already_in[$count_meal_already_in] += round($kcal_per_ingredient, 2);
+                    } else {
+                        $kcal_per_meal_already_in[$count_meal_already_in] = round($kcal_per_ingredient, 2);
+                    }
+                }
+            } else {
+                $kcal_per_meal_already_in[$count_meal_already_in] = 0;
+            }
+            $meals_already_in[$count_meal_already_in]['kcal'] = $kcal_per_meal_already_in[$count_meal_already_in];
+            $count_meal_already_in++;
+        }
+
+        return [$all_meals, $meals_already_in];
+    }
+
     public function create(Request $request, $user_id)
     {
         // $data = $request->validate([
