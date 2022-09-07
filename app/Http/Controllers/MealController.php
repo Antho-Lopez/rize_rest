@@ -403,6 +403,7 @@ class MealController extends Controller
             'removed_meals' => 'array',
         ]);
 
+        return $data;
         // $data['added_meals'] = [1, 2];
         // $data['removed_meals'] = [5, 10];
 
