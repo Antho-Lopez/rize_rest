@@ -405,8 +405,7 @@ class MealController extends Controller
 
         // $data['added_meals'] = [1, 2];
         // $data['removed_meals'] = [5, 10];
-        return $data;
-        
+
         $added_meals = $request->input('added_meals');
         $removed_meals = $request->input('removed_meals');
 
