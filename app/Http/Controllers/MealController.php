@@ -416,7 +416,7 @@ class MealController extends Controller
 
 
         foreach($added_meals as $added_meal){
-            DayMeal::create([
+            DayMeal::insert([
                 'day_id' => $day_id,
                 'meal_id' => $added_meal,
             ]);
