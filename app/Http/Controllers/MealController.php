@@ -402,14 +402,11 @@ class MealController extends Controller
             'removed_meals' => 'array',
         ]);
 
-        $data['added_meals'] = [5, 10];
-        $data['removed_meals'] = [1, 2];
-
-
+        // $data['added_meals'] = [5, 10];
+        // $data['removed_meals'] = [1, 2];
         // $added_meals = $request->input('added_meals');
         // $removed_meals = $request->input('removed_meals');
         // dd($added_meals);
-
 
         if(count($data['added_meals']) > 0){
             foreach($data['added_meals'] as $added_meal){
