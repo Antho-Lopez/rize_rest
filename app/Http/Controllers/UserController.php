@@ -134,7 +134,7 @@ class UserController extends Controller
         }
 
         $today_calories = array_sum($kcal_per_meal);
-        return [$user, $last_measured_weight, $today_sleep, $training, $today_calories];
+        return [$user, $last_measured_weight, $today_sleep, $training, $today_calories, $today];
     }
 
     public function update_weight(Request $request, $id)
