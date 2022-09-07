@@ -402,27 +402,26 @@ class MealController extends Controller
             'removed_meals' => 'array',
         ]);
 
-        // $data['added_meals'] = [5, 10];
-        // $data['removed_meals'] = [1, 2];
-        // $added_meals = $request->input('added_meals');
-        // $removed_meals = $request->input('removed_meals');
-        // dd($added_meals);
+        $count_added = 0;
+        $added = $request->input('added_meals');
+        // $added_meals = [1, 2];
+        // $removed_meals = [5, 10];
 
-        if(count($data['added_meals']) > 0){
-            foreach($data['added_meals'] as $added_meal){
-                DayMeal::create([
-                    'day_id' => $day_id,
-                    'meal_id' => $added_meal,
-                ]);
-            }
+        foreach($added as $added_meal){
+            DayMeal::create([
+                'day_id' => $day_id,
+                'meal_id' => $data['added_meals'][$count_added],
+            ]);
+            $count_added++;
         }
 
-        if(count($data['removed_meals']) > 0){
-            foreach($data['removed_meals'] as $removed_meal){
+        $removed = $request->input('removed_meals');
 
-                DayMeal::where('meal_id', $removed_meal)->where('day_id', $day_id)->delete();
-            }
+        foreach($removed as $removed_meal){
+
+            DayMeal::where('meal_id', $removed_meal)->where('day_id', $day_id)->delete();
         }
+
 
     }
 }
