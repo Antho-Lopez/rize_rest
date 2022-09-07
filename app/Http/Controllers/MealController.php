@@ -7,6 +7,7 @@ use App\Models\Ingredient;
 use App\Models\Meal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MealController extends Controller
 {
@@ -416,7 +417,7 @@ class MealController extends Controller
 
 
         foreach($added_meals as $added_meal){
-            DayMeal::insert([
+            DB::table('day_meal')->insert([
                 'day_id' => $day_id,
                 'meal_id' => $added_meal,
             ]);
