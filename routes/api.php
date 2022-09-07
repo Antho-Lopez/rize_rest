@@ -41,8 +41,9 @@ Route::middleware('api')->group(function() {
     Route::get('/user/{user_id}/day/{day_id}', 'MealController@daily_meals');
     Route::post('/user/{user_id}/meal/create', 'MealController@create');
 
-    Route::get('/user/{user_id}/day/{day_id}/edit', 'MealController@edit_day_meal');
-    
+    Route::gegit('/user/{user_id}/day/{day_id}/edit', 'MealController@edit_day_meal');
+    Route::post('/user/{user_id}/day/{day_id}/update', 'MealController@update_daily_meals');
+
     Route::post('/user/{user_id}/meal/{meal_id}/update_meal', 'MealController@update_meal');
 
     // TRAININGS
