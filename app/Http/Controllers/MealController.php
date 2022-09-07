@@ -424,7 +424,7 @@ class MealController extends Controller
         }
 
         foreach($removed_meals as $removed_meal){
-            DayMeal::where('day_id', $day_id)->where('meal_id', $removed_meal)->delete();
+            DayMeal::where('day_id', $day_id)->where('meal_id', $removed_meal)->forceDelete();
         }
 
 
