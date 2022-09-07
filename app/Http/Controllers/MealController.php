@@ -403,8 +403,8 @@ class MealController extends Controller
             'removed_meals' => 'array',
         ]);
 
-        $data['added_meals'] = [1, 2];
-        $data['removed_meals'] = [5, 10];
+        // $data['added_meals'] = [1, 2];
+        // $data['removed_meals'] = [5, 10];
 
         $added_meals = $request->input('added_meals');
         $removed_meals = $request->input('removed_meals');
