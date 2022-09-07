@@ -398,13 +398,13 @@ class MealController extends Controller
 
 
         $data = $request->validate([
-            'day_id' => '',
             'added_meals' => 'array',
             'removed_meals' => 'array',
+            'day_id' => '',
         ]);
 
-        return $data;
-        
+        // return $data;
+
         // $data['added_meals'] = [1, 2];
         // $data['removed_meals'] = [5, 10];
 
@@ -412,8 +412,8 @@ class MealController extends Controller
         $removed_meals = $request->input('removed_meals');
 
 
-        $added_meals = [1, 2];
-        $removed_meals = [5, 10];
+        // $added_meals = [1, 2];
+        // $removed_meals = [5, 10];
 
         if(count($added_meals) > 0){
             foreach($added_meals as $added_meal){
