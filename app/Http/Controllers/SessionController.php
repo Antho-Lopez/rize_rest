@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 class SessionController extends Controller
 {
 
+    /**
+     * I get all the sessions of a training, then I get all the repetitions of each session, then I sum
+     * the repetitions of each session and I return an array with the sum of the repetitions and the
+     * date of the session
+     *
+     * param training_id the id of the training
+     */
     public function index($training_id)
     {
         $all_sessions = Session::where('training_id', $training_id)->with('repetitions')->get();

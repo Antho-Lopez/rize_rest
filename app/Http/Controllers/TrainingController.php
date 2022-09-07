@@ -7,12 +7,25 @@ use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
+    /**
+     * It returns all the trainings of a user with the days of each training.
+     *
+     * param user_id the id of the user
+     */
     public function index($user_id)
     {
         $user_trainings = Training::where('user_id', $user_id)->with('days')->get();
         return $user_trainings;
     }
 
+    /**
+     * It takes the training id, gets the training with its sessions and repetitions, then calculates
+     * the progression of the training
+     *
+     * param training_id the id of the training you want to show
+     *
+     * return The training with the four last sessions and the repetitions of each session.
+     */
     public function show($training_id)
     {
         $training = Training::with('four_last_sessions.repetitions')->with('muscles.exercices')->find($training_id);

@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
 
+    /**
+     * It creates a new user in the database, creates a token for that user, and returns the token to
+     * the client
+     *
+     * param Request request The request object.
+     *
+     * return The access token and the token type.
+     */
     public function register(Request $request){
 
         $validatedData = $request->validate([
@@ -52,6 +60,14 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * If the user's email and password match the ones in the database, then create a token and return
+     * it
+     *
+     * param Request request The request object.
+     *
+     * return A token is being returned.
+     */
     public function login(Request $request){
 
         if (!Auth::attempt($request->only('email', 'password'))) {
@@ -68,17 +84,42 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * It returns the user that is currently authenticated
+     *
+     * param Request request The incoming request object.
+     *
+     * return The user that is currently logged in.
+     */
     public function me(Request $request)
     {
         return $request->user();
     }
 
+    /**
+     * It finds the user with the given id, and then returns the user with all of their meals,
+     * trainings, and sleeps
+     *
+     * param id The id of the user you want to show
+     *
+     * return The user with the id of , and all of the meals, trainings, and sleeps associated with
+     * that user.
+     */
     public function show($id)
     {
         $user = User::with(['meals', 'trainings', 'sleeps'])->find($id);
         return $user;
     }
 
+    /**
+     * It returns an array with the user, the last measured weight, the sleep, the training, the
+     * calories and the day
+     *
+     * param id user id
+     *
+     * return An array with the user, last measured weight, today's sleep, today's training, today's
+     * calories and today's day.
+     */
     public function home($id)
     {
         $today = 1;
@@ -137,6 +178,16 @@ class UserController extends Controller
         return [$user, $last_measured_weight, $today_sleep, $training, $today_calories, $today];
     }
 
+    /**
+     * If the user's last weight entry was today, update the user's current weight and the last weight
+     * entry. If the user's last weight entry was not today, update the user's current weight and
+     * create a new weight entry
+     *
+     * param Request request The request object.
+     * param id The id of the user you want to update.
+     *
+     * return The user's current weight is being updated.
+     */
     public function update_weight(Request $request, $id)
     {
 
