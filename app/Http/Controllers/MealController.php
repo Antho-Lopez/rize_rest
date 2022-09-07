@@ -396,7 +396,6 @@ class MealController extends Controller
     public function update_daily_meals(Request $request, $user_id, $day_id)
     {
 
-
         $data = $request->validate([
             'added_meals' => 'array',
             'removed_meals' => 'array',
@@ -418,13 +417,13 @@ class MealController extends Controller
 
         foreach($added_meals as $added_meal){
             DayMeal::create([
-                'meal_id' => $added_meal,
                 'day_id' => $day_id,
+                'meal_id' => $added_meal,
             ]);
         }
 
         foreach($removed_meals as $removed_meal){
-            DayMeal::where('meal_id', $removed_meal)->where('day_id', $day_id)->delete();
+            DayMeal::where('day_id', $day_id)->where('meal_id', $removed_meal)->delete();
         }
 
 
