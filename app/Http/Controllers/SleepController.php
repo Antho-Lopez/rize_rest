@@ -10,7 +10,7 @@ class SleepController extends Controller
 {
     public function index($user_id)
     {
-        $user_sleeps = Sleep::where('user_id', $user_id)->get();
+        $user_sleeps = Sleep::where('user_id', $user_id)->orderBy('day_id', 'ASC')->get();
         return $user_sleeps;
     }
 
