@@ -414,7 +414,7 @@ class MealController extends Controller
 
             DayMeal::create([
                 'day_id' => 3,
-                'meal_id' => $added_meals,
+                'meal_id' => [4, 1],
             ]);
         }
 
