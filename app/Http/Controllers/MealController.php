@@ -402,14 +402,17 @@ class MealController extends Controller
             'removed_meals' => 'array',
         ]);
 
-        $added_meals = $request->input('added_meals');
-        $removed_meals = $request->input('removed_meals');
+        $data['added_meals'] = [5, 10];
+        $data['removed_meals'] = [1, 2];
 
-        // $added_meals = [];
-        // $removed_meals = [1, 2];
 
-        if(count($added_meals) > 0){
-            foreach($added_meals as $added_meal){
+        // $added_meals = $request->input('added_meals');
+        // $removed_meals = $request->input('removed_meals');
+        // dd($added_meals);
+
+
+        if(count($data['added_meals']) > 0){
+            foreach($data['added_meals'] as $added_meal){
                 DayMeal::create([
                     'day_id' => $day_id,
                     'meal_id' => $added_meal,
@@ -417,8 +420,8 @@ class MealController extends Controller
             }
         }
 
-        if(count($removed_meals) > 0){
-            foreach($removed_meals as $removed_meal){
+        if(count($data['removed_meals']) > 0){
+            foreach($data['removed_meals'] as $removed_meal){
 
                 DayMeal::where('meal_id', $removed_meal)->where('day_id', $day_id)->delete();
             }
